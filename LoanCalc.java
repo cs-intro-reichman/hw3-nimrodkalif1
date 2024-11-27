@@ -9,6 +9,7 @@ public class LoanCalc {
     // interest rate (double, as a percentage), and number of payments (int).  
 	public static void main(String[] args) {		
 		// Gets the loan data
+
 		double loan = Double.parseDouble(args[0]);
 		double rate = Double.parseDouble(args[1]);
 		int n = Integer.parseInt(args[2]);
@@ -27,9 +28,14 @@ public class LoanCalc {
 
 	// Computes the ending balance of a loan, given the loan amount, the periodical
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
-	private static double endBalance(double loan, double rate, int n, double payment) {	
+	private static double endBalance(double loan, double rate, int n, double payment) {
 		// Replace the following statement with your code
-		return 0;
+		for (int i = 1; i <= n; i++) {
+			loan -= payment;
+			loan *= (1 + rate / 100 );
+		}
+
+		return loan;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
@@ -37,18 +43,47 @@ public class LoanCalc {
 	// Given: the sum of the loan, the periodical interest rate (as a percentage),
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
-    public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
+	public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		// Replace the following statement with your code
-		return 0;
-    }
+		iterationCounter = 0;
+		double payment = loan/n;
+
+		while (endBalance(loan, rate, n, payment) > 0) {
+			payment += epsilon;
+			iterationCounter++;
+		}
+		if (endBalance(loan, rate, n, payment) < 0)
+			return payment - epsilon;
+		return payment;
+	}
     
     // Uses bisection search to compute an approximation of the periodical payment 
 	// that will bring the ending balance of a loan close to 0.
 	// Given: the sum of the loan, the periodical interest rate (as a percentage),
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
-    public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
+    public static double bisectionSolver(double loan, double rate, int n, double epsilon) {
         // Replace the following statement with your code
-		return 0;
+		iterationCounter = 0;
+
+		double low = 0;
+		double high = (int) loan;
+		double mid = (high + low) / 2;
+
+		while ((high - low) > epsilon) {
+			iterationCounter++;
+
+			double current = endBalance(loan, rate, n, mid);
+			if (Math.abs(current) < epsilon)
+				return mid;
+
+			if (current > 0)
+				low = mid;
+			else
+				high = mid;
+			mid = (high + low) / 2;
+		}
+
+		return mid;
     }
 }
