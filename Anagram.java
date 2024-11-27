@@ -15,7 +15,7 @@ public class Anagram {
 		
 		// Performs a stress test of randomAnagram 
 		String str = "1234567";
-		bool pass = true;
+		boolean pass = true;
 		//// 10 can be changed to much larger values, like 1000
 		for (int i = 0; i < 10; i++) {
 			String randomAnagram = randomAnagram(str);
@@ -56,7 +56,7 @@ public class Anagram {
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 			// Check if the character is alphabetic
-			if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')) {
+			if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == ' ') {
 				result += c; // Append the alphabetic character to the result
 			}
 		}
