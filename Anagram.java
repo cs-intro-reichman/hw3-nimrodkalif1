@@ -15,7 +15,7 @@ public class Anagram {
 		
 		// Performs a stress test of randomAnagram 
 		String str = "1234567";
-		Boolean pass = true;
+		bool pass = true;
 		//// 10 can be changed to much larger values, like 1000
 		for (int i = 0; i < 10; i++) {
 			String randomAnagram = randomAnagram(str);
