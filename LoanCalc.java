@@ -12,6 +12,7 @@ public class LoanCalc {
 		double loan = Double.parseDouble(args[0]);
 		double rate = Double.parseDouble(args[1]);
 		int n = Integer.parseInt(args[2]);
+
 		System.out.println("Loan = " + loan + ", interest rate = " + rate + "%, periods = " + n);
 
 		// Computes the periodical payment using brute force search
@@ -29,7 +30,9 @@ public class LoanCalc {
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
 		// Replace the following statement with your code
-		return 0;
+		double totalWithInterest = loan * Math.pow((1 + rate / 100 ), n);
+		double totalPayment = payment * n;
+		return totalWithInterest - totalPayment;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
@@ -39,7 +42,15 @@ public class LoanCalc {
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		// Replace the following statement with your code
-		return 0;
+		iterationCounter = 0;
+
+		double result = epsilon;
+		while (endBalance(loan, rate, n, result) > epsilon) {
+			iterationCounter++;
+			result += epsilon;
+		}
+
+		return result;
     }
     
     // Uses bisection search to compute an approximation of the periodical payment 
@@ -47,8 +58,28 @@ public class LoanCalc {
 	// Given: the sum of the loan, the periodical interest rate (as a percentage),
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
-    public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
+    public static double bisectionSolver(double loan, double rate, int n, double epsilon) {
         // Replace the following statement with your code
-		return 0;
+		iterationCounter = 0;
+
+		double low = 0;
+		double high = (int) loan;
+		double mid = (high + low) / 2;
+
+		while ((high - low) > epsilon) {
+			iterationCounter++;
+
+			double current = endBalance(loan, rate, n, mid);
+			if (Math.abs(current) < epsilon)
+				return mid;
+
+			if (current > 0)
+				low = mid;
+			else
+				high = mid;
+			mid = (high + low) / 2;
+		}
+
+		return mid;
     }
 }
