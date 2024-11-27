@@ -1,5 +1,5 @@
-// Implements algebraic operations and the square root function without using 
-// the Java operations a + b, a - b, a * b, a / b, a % b, and without calling 
+// Implements algebraic operations and the square root function without using
+// the Java operations a + b, a - b, a * b, a / b, a % b, and without calling
 // Math.sqrt. All the functions in this class operate on int values and
 // return int values.
 
@@ -19,8 +19,8 @@ public class Algebra {
    		System.out.println(pow(5,3));      // 5^3
    		System.out.println(pow(3,5));      // 3^5
 		System.out.println(pow(-3,5));      // 3^5
-   		System.out.println(div(12,3));   // 12 / 3    
-   		System.out.println(div(5,5));    // 5 / 5  
+   		System.out.println(div(12,3));   // 12 / 3
+   		System.out.println(div(5,5));    // 5 / 5
    		System.out.println(div(25,7));   // 25 / 7
    		System.out.println(mod(25,7));   // 25 % 7
 		System.out.println(mod(17,5));   // 17 % 5
@@ -29,7 +29,7 @@ public class Algebra {
    		System.out.println(sqrt(36));
 		System.out.println(sqrt(263169));
    		System.out.println(sqrt(76123));
-	}  
+	}
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
@@ -97,30 +97,38 @@ public class Algebra {
 		for(int i = 0; i < n; i++) {
 			result = times(result, x);
 		}
-		if (x < 0 && mod(n, 2) == 1)
-			return -1 * result;
 		return result;
 	}
 
-	// Returns the integer part of x1 / x2 
+	// Returns the integer part of x1 / x2
 	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		int result = 0;
+		// Func will throw an exception when dividing by 0. Exception handling hasn't been taught yet.
+		int sign = 1;
+		if (x1 < 0) {
+			x1 = times(-1,x1);
+			sign = times(-1,sign);
+		}
+		if (x2 < 0) {
+			x2 = times(-1,x2);
+			sign = times(-1,sign);
+		}
 
+		int result = 0;
 		while (x1 >= x2) {
 			x1 = minus(x1, x2);
-			result++;
+			result = plus(result, 1);
 		}
-		return result;
+
+		return times(result, sign);
 	}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
 		// Replace the following statement with your code
 		return x1 - times(x2, div(x1, x2));
-	}	
+	}
 
-	// Returns the integer part of sqrt(x) 
+	// Returns the integer part of sqrt(x)
 	public static int sqrt(int x) {
 		// Replace the following statement with your code
 		for(int i = 0; i <= x; i++) {
@@ -130,5 +138,5 @@ public class Algebra {
 				return i;
 		}
 		return 0; //will never reach this.
-	}	  	  
+	}
 }
